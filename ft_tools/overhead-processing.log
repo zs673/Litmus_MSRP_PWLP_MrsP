@@ -1,0 +1,123 @@
+[1/1] Sorting overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1.bin
+Total           :     116454
+Holes           :          0
+Reordered       :          0
+Non-monotonic   :          0
+Seq. constraint :          0
+Implausible     :          0
+Size            :       1.78 Mb
+Time            :       0.00 s
+Throughput      :    3812.30 Mb/s
+
+[1/1] Extracting samples from overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1.bin
+overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1.bin -> LOCK LOCK_RESUME LOCK_SUSPEND SCHED SCHED2 SCHED_TIMER UNLOCK
+overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1.bin LOCK >> overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=LOCK.float32
+Generating binary, NumPy-compatible output.
+Total       :     116454
+Skipped     :        639
+Avoided     :          0
+Complete    :       9999
+Incomplete  :          0
+Non RT      :          0
+Interleaved :          0
+Interrupted :          0
+overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1.bin LOCK_RESUME >> overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=LOCK-RESUME.float32
+Generating binary, NumPy-compatible output.
+Total       :     116454
+Skipped     :        640
+Avoided     :          0
+Complete    :          0
+Incomplete  :       2125
+Non RT      :          0
+Interleaved :          0
+Interrupted :      10294
+overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1.bin LOCK_SUSPEND >> overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=LOCK-SUSPEND.float32
+Generating binary, NumPy-compatible output.
+Total       :     116454
+Skipped     :          2
+Avoided     :          0
+Complete    :      12525
+Incomplete  :          0
+Non RT      :          0
+Interleaved :          0
+Interrupted :          0
+overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1.bin SCHED >> overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=SCHED.float32
+Generating binary, NumPy-compatible output.
+Total       :     116454
+Skipped     :          3
+Avoided     :          0
+Complete    :       9994
+Incomplete  :          0
+Non RT      :       2523
+Interleaved :      25034
+Interrupted :          0
+overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1.bin SCHED2 >> overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=SCHED2.float32
+Generating binary, NumPy-compatible output.
+Total       :     116454
+Skipped     :          5
+Avoided     :          0
+Complete    :       9993
+Incomplete  :          0
+Non RT      :       2523
+Interleaved :          0
+Interrupted :          7
+overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1.bin SCHED_TIMER >> overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=SCHED-TIMER.float32
+Generating binary, NumPy-compatible output.
+Total       :     116454
+Skipped     :       5699
+Avoided     :          0
+Complete    :        650
+Incomplete  :          0
+Non RT      :          0
+Interleaved :          0
+Interrupted :          0
+overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1.bin UNLOCK >> overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=UNLOCK.float32
+Generating binary, NumPy-compatible output.
+Total       :     116454
+Skipped     :        641
+Avoided     :          0
+Complete    :       9999
+Incomplete  :          0
+Non RT      :          0
+Interleaved :          0
+Interrupted :          0
+File names will be mangled with: sed  -e s/_n=[^_]*// -e s/_cpu=[^_]*// -e s/_msg=[^_]*// -e s/_seq=[^_]*// -e s/_u=[^_]*//
+
+[1/7] Combining overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=LOCK.float32 -> combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=LOCK.float32
+
+[2/7] Combining overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=LOCK-RESUME.float32 -> combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=LOCK-RESUME.float32
+
+[3/7] Combining overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=LOCK-SUSPEND.float32 -> combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=LOCK-SUSPEND.float32
+
+[4/7] Combining overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=SCHED2.float32 -> combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=SCHED2.float32
+
+[5/7] Combining overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=SCHED.float32 -> combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=SCHED.float32
+
+[6/7] Combining overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=SCHED-TIMER.float32 -> combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=SCHED-TIMER.float32
+
+[7/7] Combining overheads_host=helicopter_scheduler=MRSP_trace=my_cpu=1_overhead=UNLOCK.float32 -> combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=UNLOCK.float32
+SCHED2 ->     9993
+[1/1] combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=SCHED2.float32
+Not shuffling combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=SCHED2.float32.
+Storing combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=SCHED2.sf32.
+[EE] Cutoff for LOCK-RESUME is zero.
+SCHED ->     9994
+[1/1] combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=SCHED.float32
+Not shuffling combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=SCHED.float32.
+Storing combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=SCHED.sf32.
+LOCK-SUSPEND ->    12525
+[1/1] combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=LOCK-SUSPEND.float32
+Not shuffling combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=LOCK-SUSPEND.float32.
+Storing combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=LOCK-SUSPEND.sf32.
+SCHED-TIMER ->      650
+[1/1] combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=SCHED-TIMER.float32
+Not shuffling combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=SCHED-TIMER.float32.
+Storing combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=SCHED-TIMER.sf32.
+UNLOCK ->     9999
+[1/1] combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=UNLOCK.float32
+Not shuffling combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=UNLOCK.float32.
+Storing combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=UNLOCK.sf32.
+LOCK ->     9999
+[1/1] combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=LOCK.float32
+Not shuffling combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=LOCK.float32.
+Storing combined-overheads_host=helicopter_scheduler=MRSP_trace=my_overhead=LOCK.sf32.

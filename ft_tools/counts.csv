@@ -1,0 +1,7 @@
+              SCHED2,    9993
+         LOCK-RESUME,       0
+               SCHED,    9994
+        LOCK-SUSPEND,   12525
+         SCHED-TIMER,     650
+              UNLOCK,    9999
+                LOCK,    9999

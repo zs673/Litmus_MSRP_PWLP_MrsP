@@ -1,0 +1,174 @@
+#include <sched.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <errno.h>
+#include <unistd.h>
+#include <litmus.h>
+#include <string.h>
+
+struct thread_context {
+	int id;				// id of the task
+	long long *response_time;	// store the time
+};
+
+void* run(void *tcontext);
+
+long long sum;
+double avg;
+
+int max,min;
+
+int main(int argc, char** argv) {
+	cpu_set_t cs;
+	struct sched_param param;
+	int i, ret;
+	long j;
+	FILE *f;
+	pthread_t *task;
+	struct thread_context *ctx;
+	char path[200];
+	pthread_attr_t t1_attr;
+	int policy = SCHED_FIFO;
+	int threads = atoi(argv[1]);
+
+	pthread_attr_init(&t1_attr);
+
+	task = malloc(sizeof(pthread_t) * threads);
+	ctx = malloc(sizeof(struct thread_context) * threads);
+
+	/* init arrays */
+	for (i = 0; i < threads; i++) {
+		ctx[i].response_time = malloc(sizeof(long long) * 10000);
+		for (j = 0; j < 10000; j++) {
+			ctx[i].response_time[j] = 0;
+		}
+	}
+
+	/*Set thread attrs*/
+	param.sched_priority = 1;
+	ret = pthread_setschedparam(pthread_self(), SCHED_FIFO, &param);
+	if (ret != 0)
+		printf("main thread set priority fails %d %d. \n", ret, errno);
+
+	CPU_ZERO(&cs);
+	CPU_SET(0, &cs);
+	ret = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cs);
+	if (ret != 0)
+		printf("main thread set affinity fails. \n");
+
+	/* init and create tasks */
+	for (i = 0; i < threads; i++) {
+		ctx[i].id = i + 1;
+
+		param.sched_priority = 50;
+		CPU_ZERO(&cs);
+		CPU_SET(ctx[i].id, &cs);
+
+		pthread_attr_setaffinity_np(&t1_attr, sizeof(cs), &cs);
+		pthread_attr_setschedpolicy(&t1_attr, policy);
+		pthread_attr_setschedparam(&t1_attr, &param);
+		pthread_attr_setinheritsched(&t1_attr, PTHREAD_EXPLICIT_SCHED);
+
+		pthread_create(task + i, &t1_attr, run, (void *) (ctx + i));
+	}
+
+	for (i = 0; i < threads; i++)
+		pthread_join(task[i], NULL);
+
+	/* open the right file */
+	strcpy(path, "../cs/");
+	if (threads == 1)
+		strcpy(path, "1.txt");
+	if (threads == 2)
+		strcpy(path, "2.txt");
+	if (threads == 3)
+		strcpy(path, "3.txt");
+	if (threads == 4)
+		strcpy(path, "4.txt");
+	if (threads == 5)
+		strcpy(path, "5.txt");
+	if (threads == 6)
+		strcpy(path, "6.txt");
+	if (threads == 7)
+		strcpy(path, "7.txt");
+	if (threads == 8)
+		strcpy(path, "8.txt");
+	if (threads == 9)
+		strcpy(path, "9.txt");
+	if (threads == 110)
+		strcpy(path, "10.txt");
+	if (threads == 11)
+		strcpy(path, "11.txt");
+	if (threads == 12)
+		strcpy(path, "12.txt");
+	if (threads == 13)
+		strcpy(path, "13.txt");
+	if (threads == 14)
+		strcpy(path, "14.txt");
+	if (threads == 15)
+		strcpy(path, "15.txt");
+	if (threads == 16)
+		strcpy(path, "16.txt");
+
+	f = fopen(path, "w");
+	if (f == NULL) {
+		printf("Error opening result file!\n");
+		exit(1);
+	}
+
+	/* write time to the file */
+	printf("threads %d, goes to file %s.\n", threads, path);
+	printf("Linux Generic. \n");
+	for (i = 0; i < threads; i++) {
+		sum = 0;
+		avg = 0;
+		max = 0;
+		min = 99999999;
+		fprintf(f, "task %d access time:\n", i + 1);
+		for (j = 0; j < 10000; j++) {
+		
+				sum += ctx[i].response_time[j];
+				if(max < ctx[i].response_time[j])
+					max = ctx[i].response_time[j];
+				if(min > ctx[i].response_time[j])
+					min = ctx[i].response_time[j];
+
+				fprintf(f, "%lld\n", ctx[i].response_time[j]);
+			
+		}		avg = sum / 10000;
+		printf("task %d on core %d executes %ld times, exec_avg1: %20.5f, max %d, min %d \n", i, ctx[i].id, j, avg, max, min);
+		fprintf(f, "task %d on core %d executes %ld times, exec_avg1: %20.5f, max %d, min %d. \n", i, ctx[i].id, j, avg, max, min);
+
+		free(ctx[i].response_time);
+	}
+
+	free(task);
+	fclose(f);
+	free(ctx);
+
+	return 0;
+}
+
+void* run(void *tcontext) {
+	struct thread_context *ctx = (struct thread_context *) tcontext;
+	struct timespec start, end;
+	int count = 0, i = 0, cal_count = 0;
+
+	do {
+		clock_gettime(CLOCK_THREAD_CPUTIME_ID, &start);
+		for (cal_count = 0; cal_count < 6000000; cal_count++) {
+			i++;
+		}
+		clock_gettime(CLOCK_THREAD_CPUTIME_ID, &end);
+
+		/* store the time in the arrays */
+		ctx->response_time[count] = (end.tv_sec * 1000000000 + end.tv_nsec) - (start.tv_sec * 1000000000 + start.tv_nsec);
+		
+		count++;
+
+	} while (count < 10000);
+
+	return NULL;
+}
+
